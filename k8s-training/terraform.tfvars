@@ -25,7 +25,7 @@ enable_k8s_node_group_sa   = true
 # mig_parted_config =   # If set, value will be checked against allowed for the selected 'gpu_nodes_platform'
 
 # Observability
-enable_prometheus = true  # Enable or disable Prometheus and Grafana deployment with true or false
+enable_prometheus = true # Enable or disable Prometheus and Grafana deployment with true or false
 enable_loki       = true # Enable or disable Loki deployment with true or false
 
 # Storage
