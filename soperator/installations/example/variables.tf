@@ -115,6 +115,12 @@ variable "company_name" {
 
 # region Storage
 
+variable "use_controller_pvc" {
+  description = "Whether to use PVC for controller node boot disk."
+  type        = bool
+  default     = true
+}
+
 variable "filestore_controller_spool" {
   description = "Shared filesystem to be used on controller nodes."
   type = object({

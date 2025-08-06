@@ -224,6 +224,11 @@ variable "filestores" {
 # endregion Filestore
 
 # region Disks
+variable "use_controller_pvc" {
+  description = "Whether to use PVC for controller node boot disk."
+  type        = bool
+  default     = true
+}
 
 variable "node_local_jail_submounts" {
   description = "Node-local disks to be mounted inside jail."

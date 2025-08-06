@@ -373,6 +373,7 @@ module "slurm" {
   accounting_enabled      = var.accounting_enabled
   slurmdbd_config         = var.slurmdbd_config
   slurm_accounting_config = var.slurm_accounting_config
+  use_controller_pvc      = var.use_controller_pvc
 
   filestores = {
     controller_spool = {
