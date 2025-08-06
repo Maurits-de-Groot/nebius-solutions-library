@@ -116,7 +116,7 @@ variable "company_name" {
 # region Storage
 
 variable "controller_state_on_filestore" {
-  description = "Whether to use PVC for controller node boot disk."
+  description = "Whether to use Filestore for controller node boot disk (true = Filestore, false = PVC)."
   type        = bool
   default     = false
 }
