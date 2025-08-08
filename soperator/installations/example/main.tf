@@ -380,14 +380,14 @@ module "slurm" {
     size_gibibytes     = sm.size_gibibytes
     disk_type          = sm.disk_type
     filesystem_type    = sm.filesystem_type
-    storage_class_name = one(module.k8s_storage_class).storage_classes[sm.disk_type][sm.filesystem_type]
+    storage_class_name = module.k8s_storage_class.storage_classes[sm.disk_type][sm.filesystem_type]
   }]
   node_local_image_storage = {
     enabled = var.node_local_image_disk.enabled
     spec = var.node_local_image_disk.enabled ? {
       size_gibibytes     = var.node_local_image_disk.spec.size_gibibytes
       filesystem_type    = var.node_local_image_disk.spec.filesystem_type
-      storage_class_name = one(module.k8s_storage_class).storage_classes[var.node_local_image_disk.spec.disk_type][var.node_local_image_disk.spec.filesystem_type]
+      storage_class_name = module.k8s_storage_class.storage_classes[var.node_local_image_disk.spec.disk_type][var.node_local_image_disk.spec.filesystem_type]
     } : null
   }
 
