@@ -535,6 +535,14 @@ variable "slurm_nodeset_system" {
       block_size_kibibytes = 4
     }
   }
+  validation {
+    condition     = var.slurm_nodeset_system.boot_disk.size_gibibytes >= 128
+    error_message = "Boot disks for system nodes must be at least 128 GiB."
+  }
+  validation {
+    condition     = var.slurm_nodeset_system.min_size >= 3
+    error_message = "Minimum size of the system node group must be at least 3."
+  }
 }
 
 variable "slurm_nodeset_controller" {
@@ -553,7 +561,7 @@ variable "slurm_nodeset_controller" {
   })
   nullable = false
   default = {
-    size = 1
+    size = 2
     resource = {
       platform = "cpu-d3"
       preset   = "16vcpu-64gb"
@@ -563,6 +571,14 @@ variable "slurm_nodeset_controller" {
       size_gibibytes       = 128
       block_size_kibibytes = 4
     }
+  }
+  validation {
+    condition     = var.slurm_nodeset_controller.boot_disk.size_gibibytes >= 128
+    error_message = "Boot disks for controller nodes must be at least 128 GiB."
+  }
+  validation {
+    condition     = var.slurm_nodeset_controller.size >= 2
+    error_message = "Size of the controller node group must be at least 2."
   }
 }
 
@@ -598,7 +614,7 @@ variable "slurm_nodeset_workers" {
     }
     boot_disk = {
       type                 = "NETWORK_SSD"
-      size_gibibytes       = 128
+      size_gibibytes       = 512
       block_size_kibibytes = 4
     }
   }]
@@ -615,6 +631,14 @@ variable "slurm_nodeset_workers" {
       (worker.size % worker.nodes_per_nodegroup == 0)
     ])
     error_message = "Worker count must be divisible by nodes_per_nodegroup."
+  }
+
+  validation {
+    condition = alltrue([
+      for worker in var.slurm_nodeset_workers :
+      (worker.boot_disk >= 512)
+    ])
+    error_message = "Boot disks for worker nodes must be at least 512 GiB."
   }
 }
 
@@ -641,9 +665,17 @@ variable "slurm_nodeset_login" {
     }
     boot_disk = {
       type                 = "NETWORK_SSD"
-      size_gibibytes       = 128
+      size_gibibytes       = 256
       block_size_kibibytes = 4
     }
+  }
+  validation {
+    condition     = var.slurm_nodeset_login.boot_disk.size_gibibytes >= 256
+    error_message = "Boot disks for login nodes must be at least 256 GiB."
+  }
+  validation {
+    condition     = var.slurm_nodeset_login.size >= 1
+    error_message = "Size of the login node group must be at least 1."
   }
 }
 
@@ -660,19 +692,20 @@ variable "slurm_nodeset_accounting" {
       block_size_kibibytes = number
     })
   })
-  nullable = true
-  default  = null
-}
-
-resource "terraform_data" "check_slurm_nodeset_accounting" {
-  lifecycle {
-    precondition {
-      condition = (var.accounting_enabled
-        ? var.slurm_nodeset_accounting != null
-        : true
-      )
-      error_message = "Accounting node set must be provided when accounting is enabled."
+  default  = {
+    resource = {
+      platform = "cpu-d3"
+      preset   = "8vcpu-32gb"
     }
+    boot_disk = {
+      type                 = "NETWORK_SSD"
+      size_gibibytes       = 128
+      block_size_kibibytes = 4
+    }
+  }
+  validation {
+    condition     = var.slurm_nodeset_accounting.boot_disk.size_gibibytes >= 128
+    error_message = "Boot disks for accounting nodes must be at least 128 GiB."
   }
 }
 
@@ -819,12 +852,6 @@ variable "soperator_notifier" {
 # endregion Telemetry
 
 # region Accounting
-
-variable "accounting_enabled" {
-  description = "Whether to enable accounting."
-  type        = bool
-  default     = false
-}
 
 variable "slurmdbd_config" {
   description = "Slurmdbd.conf configuration. See https://slurm.schedmd.com/slurmdbd.conf.html.Not all options are supported."
