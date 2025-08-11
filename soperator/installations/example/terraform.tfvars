@@ -25,7 +25,12 @@ company_name = ""
 #----------------------------------------------------------------------------------------------------------------------#
 # region Storage
 
+# Whether to store the controller state on filestore or network SSD.
+controller_state_on_filestore = false
+
 # Shared filesystem to be used on controller nodes.
+# Deprecated: Starting with version 1.22, this variable isn't used, as controller state is stored on network SSD disks.
+# Remains for the backward compatibility.
 # ---
 filestore_controller_spool = {
   spec = {
@@ -262,7 +267,6 @@ slurm_nodeset_controller = {
     block_size_kibibytes = 4
   }
 }
-controller_state_on_filestore = false
 
 # Configuration of Slurm Worker node sets.
 # There can be only one Worker node set for a while.
