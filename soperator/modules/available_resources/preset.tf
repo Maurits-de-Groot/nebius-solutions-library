@@ -32,7 +32,7 @@ locals {
       gpus                   = 0
       gpu_cluster_compatible = false
       sufficient = {
-        (module.labels.name_nodeset_system)     = false
+        (module.labels.name_nodeset_system)     = true
         (module.labels.name_nodeset_controller) = true
         (module.labels.name_nodeset_worker)     = true
         (module.labels.name_nodeset_login)      = false
