@@ -322,6 +322,12 @@ variable "dcgm_job_map_dir" {
 
 # region Accounting
 
+variable "accounting_enabled" {
+  description = "Whether to enable accounting."
+  type        = bool
+  default     = true
+}
+
 variable "use_protected_secret" {
   description = "If true, protected user secret MariaDB will not be deleted after the MariaDB CR is deleted."
   type        = bool
