@@ -709,6 +709,19 @@ variable "slurm_nodeset_accounting" {
   }
 }
 
+resource "terraform_data" "check_slurm_nodeset_accounting" {
+  lifecycle {
+    precondition {
+      condition = (var.accounting_enabled
+        ? var.slurm_nodeset_accounting != null
+        : true
+      )
+      error_message = "Accounting node set must be provided when accounting is enabled."
+    }
+  }
+}
+
+
 resource "terraform_data" "check_slurm_nodeset" {
   for_each = merge({
     "system"     = var.slurm_nodeset_system
@@ -852,6 +865,12 @@ variable "soperator_notifier" {
 # endregion Telemetry
 
 # region Accounting
+
+variable "accounting_enabled" {
+  description = "Whether to enable accounting."
+  type        = bool
+  default     = false
+}
 
 variable "slurmdbd_config" {
   description = "Slurmdbd.conf configuration. See https://slurm.schedmd.com/slurmdbd.conf.html.Not all options are supported."

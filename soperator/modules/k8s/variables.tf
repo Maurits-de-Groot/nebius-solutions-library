@@ -116,6 +116,7 @@ variable "node_group_login" {
 variable "node_group_accounting" {
   description = "System node group specification."
   type = object({
+    enabled = bool
     spec = optional(object({
       resource = object({
         platform = string
@@ -128,6 +129,14 @@ variable "node_group_accounting" {
       })
     }))
   })
+
+  validation {
+    condition = (var.node_group_accounting.enabled
+      ? var.node_group_accounting.spec != null
+      : true
+    )
+    error_message = "Specification must be provided when accounting is enabled."
+  }
 }
 
 #---

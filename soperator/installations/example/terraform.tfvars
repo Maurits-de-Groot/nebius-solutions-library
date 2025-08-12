@@ -120,6 +120,8 @@ node_local_image_disk = {
 }
 
 # Shared filesystem to be used for accounting DB.
+# By default, null.
+# Required if accounting_enabled is true.
 # ---
 filestore_accounting = {
   spec = {
@@ -396,6 +398,20 @@ soperator_notifier = {
 public_o11y_enabled = true
 
 # endregion Telemetry
+
+#----------------------------------------------------------------------------------------------------------------------#
+#                                                                                                                      #
+#                                                       Accounting                                                     #
+#                                                                                                                      #
+#----------------------------------------------------------------------------------------------------------------------#
+# region Accounting
+
+# Whether to enable Accounting.
+# By default, true.
+# ---
+accounting_enabled = true
+
+# endregion Accounting
 
 # endregion Slurm
 
