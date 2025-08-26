@@ -28,5 +28,5 @@ resources:
             mountPath: /mnt/jail
       name: soperator-outputs-logs-cleaner
       schedule: "0 */2 * * *" # every 2 hours
-      runAfterCreation: false
+      runAfterCreation: true
       slurmClusterRefName: ${slurm_cluster_name}
