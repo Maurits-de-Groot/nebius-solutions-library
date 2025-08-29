@@ -250,3 +250,15 @@ variable "mig_strategy" {
   type        = string
   default     = null
 }
+
+variable "cpu_nodes_preemptible" {
+  description = "Whether the cpu nodes should be preemptible"
+  type        = bool
+  default     = false
+}
+
+variable "gpu_nodes_preemptible" {
+  description = "Whether the gpu nodes should be preemptible"
+  type        = bool
+  default     = false
+}
