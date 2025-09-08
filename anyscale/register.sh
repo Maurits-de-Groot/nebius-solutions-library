@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: ./register_cloud.sh <cloud_name>
+# Usage: ./register.sh <cloud_name>
 # This script registers a cloud with Anyscale using terraform outputs.
 
 set -euo pipefail  # Exit on error, unset vars are errors, fail on pipeline errors

@@ -34,7 +34,7 @@ resource "nebius_applications_v1alpha1_k8s_release" "this" {
 
   application_name = "anyscale-operator"
   namespace        = "anyscale-operator"
-  product_slug     = "nebius/keyvan-anyscale-operator"
+  product_slug     = "nebius/anyscale-operator"
 
   set = {
     "cloudDeploymentId" : local.config.anyscale.cloud_deployment_id,
