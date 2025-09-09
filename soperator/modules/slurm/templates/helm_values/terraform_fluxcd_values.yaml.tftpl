@@ -545,6 +545,13 @@ resources:
                       name: nfs
                       volumeSourceName: nfs
                     %{~ endif ~}
+                    %{~ if telemetry_enabled ~}
+                    - mountPath: /etc/update-motd.d/95-nebius-o11y
+                      subPath: 95-nebius-o11y
+                      readOnly: true
+                      name: motd-nebius-o11y
+                      volumeSourceName: motd-nebius-o11y
+                    %{~ endif ~}
                     %{~ for sub_mount in slurm_cluster.jail_submounts ~}
                     - name: ${sub_mount.name}
                       mountPath: ${sub_mount.mount_path}
