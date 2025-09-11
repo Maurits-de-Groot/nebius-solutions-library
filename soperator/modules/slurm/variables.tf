@@ -14,6 +14,11 @@ variable "operator_stable" {
   default     = true
 }
 
+variable "iam_tenant_id" {
+  description = "ID of the IAM tenant."
+  type        = string
+}
+
 variable "iam_project_id" {
   description = "ID of the IAM project."
   type        = string
@@ -126,7 +131,7 @@ variable "resources" {
   # TODO: remove when node sets are supported
   validation {
     condition     = length(var.resources.worker) == 1
-    error_message = "Only one worker node is supported."
+    error_message = "Only one worker nodeset is supported."
   }
 }
 
@@ -281,6 +286,44 @@ variable "nfs" {
   }
 }
 
+variable "nfs_in_k8s" {
+  type = object({
+    enabled        = bool
+    size_gibibytes = optional(number)
+    storage_class  = optional(string, "compute-csi-network-ssd-io-m3-ext4")
+  })
+  default = {
+    enabled       = false
+  }
+
+  validation {
+    condition     = var.nfs_in_k8s.enabled ? var.nfs_in_k8s.size_gibibytes != null : true
+    error_message = "NFS size_gibibytes must be set."
+  }
+
+  validation {
+    condition     = var.nfs_in_k8s.enabled ? var.nfs.enabled == false : true
+    error_message = "Only one of nfs or nfs_in_k8s should be set."
+  }
+
+  validation {
+    condition = (
+      (
+        var.nfs_in_k8s.enabled &&
+        var.nfs_in_k8s.storage_class == "compute-csi-network-ssd-io-m3-ext4" &&
+        var.nfs_in_k8s.size_gibibytes != null
+      )
+      ?
+      (
+        var.nfs_in_k8s.size_gibibytes % 93 == 0 &&
+        var.nfs_in_k8s.size_gibibytes <= 262074
+      )
+      : true
+    )
+    error_message = "NFS size must be a multiple of 93 GiB and maximum value is 262074 GiB"
+  }
+}
+
 # endregion nfs-server
 
 # region Config
@@ -316,12 +359,6 @@ variable "dcgm_job_map_dir" {
 # endregion Telemetry
 
 # region Accounting
-
-variable "mariadb_operator_namespace" {
-  description = "Namespace for MariaDB operator."
-  type        = string
-  default     = "mariadb-operator-system"
-}
 
 variable "accounting_enabled" {
   description = "Whether to enable accounting."
@@ -408,6 +445,18 @@ variable "public_o11y_enabled" {
   description = "Whether to enable public observability endpoints."
   type        = bool
   default     = true
+}
+
+variable "soperator_notifier" {
+  description = "Configuration of the Soperator Notifier (https://github.com/nebius/soperator/tree/main/helm/soperator-notifier)."
+  type = object({
+    enabled           = bool
+    slack_webhook_url = optional(string)
+  })
+  default = {
+    enabled = false
+  }
+  nullable = false
 }
 
 variable "create_pvcs" {
@@ -639,4 +688,10 @@ variable "region" {
   description = "Region where the Slurm cluster is deployed."
   type        = string
   default     = "eu-north1"
+}
+
+variable "use_preinstalled_gpu_drivers" {
+  description = "Whether to use preinstalled GPU drivers."
+  type        = bool
+  default     = false
 }
