@@ -2816,7 +2816,7 @@
           "type": "prometheus",
           "uid": "VictoriaMetrics"
         },
-        "definition": "label_values(node_uname_info{job=\"node-exporter\", nodename=~\"$hostname\"},instance)",
+        "definition": "label_values(node_uname_info{container=\"node-exporter\", nodename=~\"$hostname\"},instance)",
         "hide": 2,
         "includeAll": true,
         "label": "ip",
@@ -2825,7 +2825,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(node_uname_info{job=\"node-exporter\", nodename=~\"$hostname\"},instance)",
+          "query": "label_values(node_uname_info{container=\"node-exporter\", nodename=~\"$hostname\"},instance)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
