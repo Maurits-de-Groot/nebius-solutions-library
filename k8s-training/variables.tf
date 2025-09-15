@@ -157,6 +157,12 @@ variable "gpu_disk_size" {
   default     = "1023"
 }
 
+variable "enable_gpu_cluster" {
+  description = "Infiniband's fabric name."
+  type        = bool
+  default     = true
+}
+
 variable "infiniband_fabric" {
   description = "Infiniband's fabric name."
   type        = string
@@ -249,4 +255,22 @@ variable "mig_strategy" {
   description = "MIG strategy for GPU operator"
   type        = string
   default     = null
+}
+
+variable "cpu_nodes_preemptible" {
+  description = "Use preemptible VMs for CPU nodes"
+  type        = bool
+  default     = false
+}
+
+variable "gpu_nodes_preemptible" {
+  description = "Use preemptible VMs for GPU nodes"
+  type        = bool
+  default     = false
+}
+
+variable "gpu_health_cheker" {
+  description = "Use preemptible VMs for GPU nodes"
+  type        = bool
+  default     = true
 }
