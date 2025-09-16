@@ -68,5 +68,10 @@ if [ $updated_count -eq 0 ]; then
     echo "✅ All dashboards are up to date!"
 else
     echo "✅ Updated $updated_count dashboard(s), skipped $skipped_count unchanged"
-    echo "⏳ Wait 30s for Grafana to reload dashboards automatically"
+    echo "⏳ Waiting for Grafana to reload dashboards automatically..."
+    for i in {30..1}; do
+        printf "\r⏳ Wait for %2d seconds..." "$i"
+        sleep 1
+    done
+    printf "\r✅ Done waiting! Dashboards should be reloaded.\n"
 fi
