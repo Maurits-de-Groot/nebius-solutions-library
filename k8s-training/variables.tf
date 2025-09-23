@@ -54,7 +54,7 @@ variable "filestore_disk_type" {
 variable "filestore_disk_size" {
   description = "Filestore disk size in bytes."
   type        = number
-  default     = 1073741824
+  default     = 1 * 1024 * 1024 * 1024 # 1 GiB
 }
 
 variable "filestore_block_size" {

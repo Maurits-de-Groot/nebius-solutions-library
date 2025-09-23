@@ -27,7 +27,7 @@ variable "cpu_nodes_preset" {
 
 variable "nfs_size" {
   type        = number
-  default     = 93 * 1024 * 1024 * 1024 # size should be a multiple of 99857989632
+  default     = 93 * 1024 * 1024 * 1024 # size should be a multiple of 93 GiB
   description = "Size of the NFS in GB, should be divisbile by 93"
 }
 
