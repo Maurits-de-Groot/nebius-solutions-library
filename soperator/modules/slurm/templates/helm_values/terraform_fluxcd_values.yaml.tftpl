@@ -654,7 +654,7 @@ resources:
                     command: ["grep", " /volume-mount virtiofs ", "/proc/mounts"]
                   %{~ if tailscale_enabled ~}
                   - name: tailscale
-                    image: ghcr.io/tailscale/tailscale:latest # TODO: push image
+                    image: cr.eu-north1.nebius.cloud/soperator/tailscale:latest # v1.88.4
                     imagePullPolicy: Always
                     restartPolicy: Always
                     securityContext:
