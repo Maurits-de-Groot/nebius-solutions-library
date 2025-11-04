@@ -237,6 +237,32 @@ locals {
         (module.labels.name_nodeset_accounting) = true
       }
     }
+    g-1gpu-24vcpu-346gb = {
+      cpu_cores              = 24 * local.reserve.cpu.coefficient - local.reserve.cpu.count
+      memory_gibibytes       = 346 * local.reserve.ram.coefficient - local.reserve.ram.count
+      gpus                   = 1
+      gpu_cluster_compatible = false
+      sufficient = {
+        (module.labels.name_nodeset_system)     = true
+        (module.labels.name_nodeset_controller) = true
+        (module.labels.name_nodeset_worker)     = true
+        (module.labels.name_nodeset_login)      = true
+        (module.labels.name_nodeset_accounting) = true
+      }
+    }
+    g-8gpu-192vcpu-2768gb = {
+      cpu_cores              = 192 * local.reserve.cpu.coefficient - local.reserve.cpu.count
+      memory_gibibytes       = 2768 * local.reserve.ram.coefficient - local.reserve.ram.count
+      gpus                   = 8
+      gpu_cluster_compatible = true
+      sufficient = {
+        (module.labels.name_nodeset_system)     = true
+        (module.labels.name_nodeset_controller) = true
+        (module.labels.name_nodeset_worker)     = true
+        (module.labels.name_nodeset_login)      = true
+        (module.labels.name_nodeset_accounting) = true
+      }
+    }
   }
 
   presets_by_platforms = tomap({
@@ -285,6 +311,11 @@ locals {
     "gpu-b200-sxm-a" = tomap({
       "1gpu-20vcpu-224gb"   = local.presets_gpu.g-1gpu-20vcpu-224gb
       "8gpu-160vcpu-1792gb" = local.presets_gpu.g-8gpu-160vcpu-1792gb
+    })
+
+    "gpu-b300-sxm" = tomap({
+      "1gpu-24vcpu-346gb"   = local.presets_gpu.g-1gpu-24vcpu-346gb
+      "8gpu-192vcpu-2768gb" = local.presets_gpu.g-8gpu-192vcpu-2768gb
     })
   })
 }
