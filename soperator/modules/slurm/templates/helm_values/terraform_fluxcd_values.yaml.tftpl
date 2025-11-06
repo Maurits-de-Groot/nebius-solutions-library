@@ -917,7 +917,9 @@ resources:
           interval: 5m
           timeout: 5m
           version: ${operator_version}
+          %{~ if length(operator_feature_gates) > 0 ~}
           featureGates: "${operator_feature_gates}"
+          %{~ endif ~}
           values:
             manager:
               resources:

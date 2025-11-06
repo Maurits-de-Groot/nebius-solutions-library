@@ -323,9 +323,8 @@ module "slurm" {
   name                = local.slurm_cluster_name
   k8s_cluster_context = module.k8s.cluster_context
 
-  operator_version       = var.slurm_operator_version
-  operator_stable        = var.slurm_operator_stable
-  operator_feature_gates = var.slurm_operator_feature_gates
+  operator_version = var.slurm_operator_version
+  operator_stable  = var.slurm_operator_stable
 
   maintenance                    = var.maintenance
   maintenance_ignore_node_groups = var.maintenance_ignore_node_groups

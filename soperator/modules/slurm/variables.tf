@@ -14,12 +14,6 @@ variable "operator_stable" {
   default     = true
 }
 
-variable "operator_feature_gates" {
-  description = "Feature gates for soperator. Example: 'NodeSetWorkers=true'"
-  type        = string
-  default     = ""
-}
-
 variable "iam_tenant_id" {
   description = "ID of the IAM tenant."
   type        = string

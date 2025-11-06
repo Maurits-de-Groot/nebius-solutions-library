@@ -494,12 +494,6 @@ variable "slurm_operator_stable" {
   default     = true
 }
 
-variable "slurm_operator_feature_gates" {
-  description = "Feature gates for soperator. Example: 'NodeSetWorkers=true'"
-  type        = string
-  default     = ""
-}
-
 variable "slurm_nodesets_enabled" {
   description = "Enable nodesets feature for Slurm cluster. When enabled, creates separate nodesets for each worker configuration."
   type        = bool
