@@ -50,24 +50,6 @@ data "nebius_iam_v1_tenant" "this" {
   id = var.iam_tenant_id
 }
 
-variable "ensure_support_sa" {
-  description = "Ensure that support service account is created for this cluster."
-  type        = bool
-}
-
-variable "support_sa_project_id" {
-  description = "Project ID where support SA should be created."
-  type        = string
-  default     = ""
-}
-
-data "nebius_iam_v1_service_account" "support_sa" {
-  count = var.ensure_support_sa ? 1 : 0
-
-  name      = "support-${var.iam_tenant_id}"
-  parent_id = var.support_sa_project_id
-}
-
 variable "o11y_iam_tenant_id" {
   description = "ID of the IAM tenant for O11y."
   type        = string
@@ -90,6 +72,24 @@ variable "o11y_profile" {
       !var.public_o11y_enabled
     )
     error_message = "O11y profile must be not empty if public o11y enabled is true."
+  }
+}
+
+variable "production" {
+  type    = bool
+  default = true
+}
+
+variable "iam_merge_request_url" {
+  type = string
+
+  validation {
+    condition     = (var.production && length(var.iam_merge_request_url) > 0) || !var.production
+    error_message = <<EOF
+This variable must be set for PRODUCTION Soperator Pro clusters. Follow the installation guide and put IAM merge request URL here.
+
+If you provision a NON-PRODUCTION cluster, set "production" variable to false.
+    EOF
   }
 }
 

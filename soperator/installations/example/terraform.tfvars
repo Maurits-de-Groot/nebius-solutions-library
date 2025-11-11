@@ -9,6 +9,13 @@
 # Name of the company. It is used for context name of the cluster in .kubeconfig file.
 company_name = ""
 
+# Whether the cluster is production or not.
+production = true
+
+# Follow the installation guide and put IAM merge request URL here.
+# Required if production = true.
+iam_merge_request_url = ""
+
 #----------------------------------------------------------------------------------------------------------------------#
 #                                                                                                                      #
 #                                                                                                                      #
