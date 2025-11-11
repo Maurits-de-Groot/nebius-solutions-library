@@ -868,6 +868,17 @@ resources:
                       persistentVolumeClaim:
                         claimName: jail-pvc
                         readOnly: false
+                    customVolumeMounts:
+                      - name: slurm-scripts
+                        mountPath: /opt/slurm_scripts/
+                        volumeSource:
+                          configMap:
+                            name: slurm-scripts
+                      - name: slurm-scripts-jail
+                        mountPath: /mnt/jail.upper/opt/slurm_scripts/
+                        volumeSource:
+                          configMap:
+                            name: slurm-scripts
                   resources:
                     cpu: ${floor(worker_resources[node_group.nodeset_index].cpu_cores * 1000)}m
                     memory: ${floor(worker_resources[node_group.nodeset_index].memory_gibibytes)}Gi
