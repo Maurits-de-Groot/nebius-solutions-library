@@ -49,6 +49,7 @@ locals {
       worker     = module.labels.name_nodeset_worker
       login      = module.labels.name_nodeset_login
       accounting = module.labels.name_nodeset_accounting
+      nfs        = module.labels.name_nodeset_nfs
     }
 
     system = {
@@ -71,6 +72,10 @@ locals {
     accounting = {
       name  = module.labels.name_nodeset_accounting
       match = module.labels.name_nodeset_accounting
+    }
+    nfs = {
+      name  = module.labels.name_nodeset_nfs
+      match = module.labels.name_nodeset_nfs
     }
   }
 
@@ -132,11 +137,11 @@ locals {
     }
     nfs_server = {
       limits = {
-        memory = 2
+        memory = var.resources.nfs != null ? var.resources.nfs.memory_gibibytes : 1
       }
       requests = {
-        memory = 0.5
-        cpu    = 1
+        memory = var.resources.nfs != null ? var.resources.nfs.memory_gibibytes : 1
+        cpu    = var.resources.nfs != null ? var.resources.nfs.cpu_cores : 1
       }
     }
   }

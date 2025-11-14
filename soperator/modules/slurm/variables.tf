@@ -127,6 +127,10 @@ variable "resources" {
       memory_gibibytes            = number
       ephemeral_storage_gibibytes = number
     }))
+    nfs = optional(object({
+      cpu_cores        = number
+      memory_gibibytes = number
+    }))
   })
 
   validation {
@@ -302,6 +306,12 @@ variable "nfs" {
     condition     = var.nfs.enabled ? var.nfs.path != null && var.nfs.host != null : true
     error_message = "NFS path and host must be set."
   }
+}
+
+variable "nfs_node_group_enabled" {
+  description = "Whether the NFS node group is enabled."
+  type        = bool
+  default     = false
 }
 
 variable "nfs_in_k8s" {
