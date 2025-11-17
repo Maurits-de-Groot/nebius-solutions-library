@@ -171,7 +171,7 @@ For more information on how to access storage in K8s, refer [here](#accessing-st
 nebius mk8s v1 cluster get-credentials --id $(cat terraform.tfstate | jq -r '.resources[] | select(.type == "nebius_mk8s_v1_cluster") | .instances[].attributes.id') --external
 ```
 
-Alternatively, use the k8s cluster id shown on the Nebius console: 
+   Alternatively, use the k8s cluster id shown on the Nebius console: 
 ```bash
 nebius mk8s v1 cluster get-credentials --id mk8scluster-<cluster_id> --external
 ```
