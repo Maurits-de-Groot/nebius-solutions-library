@@ -193,19 +193,12 @@ slurm_nodesets_enabled = false
 # ---
 # slurm_nodesets_partitions = [
 #   {
-#     name    = "main"
-#     is_all  = true
-#     config  = "Default=YES PriorityTier=10 MaxTime=INFINITE State=UP OverSubscribe=YES"
-#   },
-#   {
-#     name    = "hidden"
-#     is_all  = true
-#     config  = "Default=NO PriorityTier=10 PreemptMode=OFF Hidden=YES MaxTime=INFINITE State=UP OverSubscribe=YES"
-#   },
-#   {
-#     name    = "background"
-#     is_all  = true
-#     config  = "Nodes=ALL Default=NO PriorityTier=1 PreemptMode=OFF Hidden=YES MaxTime=INFINITE State=UP OverSubscribe=YES"
+#     name   = "workers"
+#     is_all = false
+#     config = "Default=NO PriorityTier=10 MaxTime=INFINITE State=UP OverSubscribe=YES"
+#     nodeset_refs = [
+#       "worker",
+#     ]
 #   },
 # ]
 

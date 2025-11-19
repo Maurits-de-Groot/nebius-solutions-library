@@ -218,11 +218,25 @@ resources:
             %{~ if slurm_nodesets_enabled ~}
               configType: ${slurm_nodesets_enabled ? "structured" : slurm_cluster.partition_configuration.slurm_config_type}
               partitions:
-              %{~ if length(slurm_nodesets_partitions) > 0 ~}
+                - name: main
+                  isAll: true
+                  config: "Default=YES PriorityTier=10 MaxTime=INFINITE State=UP OverSubscribe=YES"
+                - name: hidden
+                  isAll: true
+                  config: "Default=NO PriorityTier=10 PreemptMode=OFF Hidden=YES MaxTime=INFINITE State=UP OverSubscribe=YES"
+                - name: background
+                  isAll: true
+                  config: "Default=NO PriorityTier=1 PreemptMode=OFF Hidden=YES MaxTime=INFINITE State=UP OverSubscribe=YES"
+                %{~ for nodeset in nodesets ~}
+                - name: ${nodeset.name}
+                  nodeSetRefs:
+                    - "${nodeset.name}"
+                  config: "Default=NO PriorityTier=2 MaxTime=INFINITE State=UP OverSubscribe=YES"
+                %{~ endfor ~}
                 %{~ for partition in slurm_nodesets_partitions ~}
                 - name: ${partition.name}
                   %{~ if partition.is_all ~}
-                  nodes: ALL
+                  isAll: true
                   %{~ else ~}
                   nodeSetRefs:
                   %{~ for nodeset_ref in partition.nodeset_refs ~}
@@ -231,11 +245,6 @@ resources:
                   %{~ endif ~}
                   config: "${partition.config}"
                 %{~ endfor ~}
-              %{~ else ~}
-                - name: main
-                  default: true
-                  nodes: ALL
-              %{~ endif ~}
             %{~ else ~}
               configType: ${slurm_cluster.partition_configuration.slurm_config_type}
               %{~ if slurm_cluster.partition_configuration.slurm_config_type == "custom" ~}
