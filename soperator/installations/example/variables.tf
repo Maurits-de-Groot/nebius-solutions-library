@@ -81,7 +81,8 @@ variable "production" {
 }
 
 variable "iam_merge_request_url" {
-  type = string
+  type    = string
+  default = ""
 
   validation {
     condition     = (var.production && length(var.iam_merge_request_url) > 0) || !var.production
