@@ -224,14 +224,13 @@ resources:
                 - name: hidden
                   isAll: true
                   config: "Default=NO PriorityTier=10 PreemptMode=OFF Hidden=YES MaxTime=INFINITE State=UP OverSubscribe=YES"
-                - name: background
-                  isAll: true
-                  config: "Default=NO PriorityTier=1 PreemptMode=OFF Hidden=YES MaxTime=INFINITE State=UP OverSubscribe=YES"
                 %{~ for nodeset in nodesets ~}
+                %{~ if nodeset.create_partition ~}
                 - name: ${nodeset.name}
                   nodeSetRefs:
                     - "${nodeset.name}"
                   config: "Default=NO PriorityTier=2 MaxTime=INFINITE State=UP OverSubscribe=YES"
+                %{~ endif ~}
                 %{~ endfor ~}
                 %{~ for partition in slurm_nodesets_partitions ~}
                 - name: ${partition.name}

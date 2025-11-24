@@ -468,6 +468,7 @@ module "slurm" {
       ],
       nodeset.features != null ? nodeset.features : []
     )
+    create_partition = nodeset.create_partition != null ? nodeset.create_partition : false
   }]
 
   login_allocation_id            = module.k8s.static_ip_allocation_id

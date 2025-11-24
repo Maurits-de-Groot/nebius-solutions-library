@@ -324,6 +324,8 @@ slurm_nodeset_workers = [
     preemptible = null
     # Provide a list of strings to set Slurm Node features
     features = null
+    # Set to `true` to create partition for the NodeSet by default
+    create_partition = null
   },
 ]
 

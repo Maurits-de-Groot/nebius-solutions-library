@@ -772,10 +772,11 @@ variable "slurm_nodesets_enabled" {
 
 variable "worker_nodesets" {
   type = list(object({
-    name            = string
-    replicas        = number
-    max_unavailable = string
-    features        = list(string)
+    name             = string
+    replicas         = number
+    max_unavailable  = string
+    features         = list(string)
+    create_partition = bool
   }))
   default = []
 }
