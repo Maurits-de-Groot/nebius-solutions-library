@@ -660,6 +660,7 @@ variable "slurm_nodeset_workers" {
       infiniband_fabric = string
     }))
     preemptible = optional(object({}))
+    features    = optional(list(string))
   }))
   nullable = false
   default = [{

@@ -461,7 +461,13 @@ module "slurm" {
     name            = nodeset.name
     replicas        = nodeset.size
     max_unavailable = "20%"
-    features        = []
+    features = concat(
+      [
+        provider::string-functions::snake_case(nodeset.resource.platform),
+        provider::string-functions::snake_case(nodeset.boot_disk.type),
+      ],
+      nodeset.features != null ? nodeset.features : []
+    )
   }]
 
   login_allocation_id            = module.k8s.static_ip_allocation_id

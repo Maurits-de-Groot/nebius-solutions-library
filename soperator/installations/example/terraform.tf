@@ -17,6 +17,11 @@ terraform {
       version = ">=1.1.1"
     }
 
+    string-functions = {
+      source  = "random-things/string-functions"
+      version = "0.5.0"
+    }
+
     kubernetes = {
       source = "hashicorp/kubernetes"
     }
@@ -33,6 +38,8 @@ provider "nebius" {
 }
 
 provider "units" {}
+
+provider "string-functions" {}
 
 provider "kubernetes" {
   host                   = module.k8s.control_plane.public_endpoint

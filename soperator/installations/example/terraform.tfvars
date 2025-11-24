@@ -322,6 +322,8 @@ slurm_nodeset_workers = [
     }
     # Change to preemptible = {} in case you want to use preemptible nodes
     preemptible = null
+    # Provide a list of strings to set Slurm Node features
+    features = null
   },
 ]
 
