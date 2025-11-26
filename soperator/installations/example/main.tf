@@ -468,6 +468,7 @@ module "slurm" {
       ],
       nodeset.features != null ? nodeset.features : []
     )
+    cpu_topology     = module.resources.cpu_topology_by_platform[nodeset.resource.platform][nodeset.resource.preset]
     create_partition = nodeset.create_partition != null ? nodeset.create_partition : false
   }]
 

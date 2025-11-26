@@ -776,6 +776,7 @@ variable "worker_nodesets" {
     replicas         = number
     max_unavailable  = string
     features         = list(string)
+    cpu_topology     = map(number)
     create_partition = bool
   }))
   default = []
