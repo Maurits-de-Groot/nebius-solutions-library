@@ -1109,10 +1109,10 @@ variable "flux_interval" {
 variable "active_checks_scope" {
   type        = string
   description = "Scope of active checks. Defines what active checks should be checked during cluster bootstrap."
-  default     = "prod"
+  default     = ""
   validation {
-    condition     = contains(["dev", "testing", "prod"], var.active_checks_scope)
-    error_message = "active_checks_scope should be one of: dev, testing, prod."
+    condition     = contains(["dev", "testing", "prod_quick", "prod_acceptance"], var.active_checks_scope)
+    error_message = "active_checks_scope should be one of: dev, testing, prod_quick, prod_acceptance."
   }
 }
 
