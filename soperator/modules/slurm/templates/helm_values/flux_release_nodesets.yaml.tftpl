@@ -31,6 +31,7 @@ nodesets:
             %{~ endfor ~}
           %{~ endif ~}
           static: "CPUs=${nodeset.cpu_topology.cpus} Boards=${nodeset.cpu_topology.boards} SocketsPerBoard=${nodeset.cpu_topology.sockets_per_board} CoresPerSocket=${nodeset.cpu_topology.cores_per_socket} ThreadsPerCore=${nodeset.cpu_topology.threads_per_core} %{~ if resources[i].gpus > 0 } Gres=gpu:${resources[i].gpus}%{~ endif ~}"
+          dynamic: "${extra}"
 
         slurmd:
           resources:
